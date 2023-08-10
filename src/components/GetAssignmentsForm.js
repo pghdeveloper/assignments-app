@@ -1,108 +1,52 @@
-//Code is exactly like CreateAssignmentForm but is temporary
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
 const GetAssignmentsForm = () => {
-  const [assignment, setAssignment] = useState({
-    assignee: '',
-    description: '',
-    dueDate: '',
-    percentComplete: '',
-    isPriority: false,
-  });
+  const [assignee, setAssigneeName] = useState('');
+  const [assignments, setAssignments] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? checked : value;
-
-    setAssignment((prevAssignment) => ({
-      ...prevAssignment,
-      [name]: newValue,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Convert percentComplete to null if it's an empty string
-    const finalAssignment = {
-        ...assignment,
-        percentComplete: assignment.percentComplete === '' ? null : assignment.percentComplete,
-    };
-
-    try {
-        const response = await axios.post('https://localhost:7287/Assignments', finalAssignment);
-  
-        // Success! Handle the response or any actions after a successful POST
-        console.log('Assignment created successfully');
-      } catch (error) {
-        // Handle any network or other errors
-        console.error('Error:', error);
-      }
+  const handleSearchClick = () => {
+    // Replace this URL with your actual endpoint and add any required headers
+    axios.get(`https://localhost:7287/Assignments?assignee=${assignee}`)
+    .then((response) => setAssignments(response.data))
+    .catch((error) => console.error('An error occurred:', error));
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* Input fields for assignee, description, dueDate, percentComplete, and isPriority */}
-      {/* Use the assignment state and handleChange function to manage the form fields */}
+    <div>
       <div>
-        <label>
-          Assignee:
-          <input
-            type="text"
-            name="assignee"
-            value={assignment.assignee}
-            onChange={handleChange}
-          />
-        </label>
+        <label htmlFor="assignee">Assignee Name:</label>
+        <input
+          type="text"
+          id="assignee"
+          value={assignee}
+          onChange={(e) => setAssigneeName(e.target.value)}
+        />
+        <button onClick={handleSearchClick}>Get Assignments</button>
       </div>
-      <div>
-        <label>
-          Description:
-          <input
-            type="text"
-            name="description"
-            value={assignment.description}
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Due Date:
-          <input
-            type="text"
-            name="dueDate"
-            value={assignment.dueDate}
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Percent Complete:
-          <input
-            type="text"
-            name="percentComplete"
-            value={assignment.percentComplete}
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Is Priority:
-          <input
-            type="checkbox"
-            name="isPriority"
-            value={assignment.isPriority}
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-      <button type="submit">Create Assignment</button>
-    </form>
+      <table>
+        <thead>
+          <tr>
+            <th>Assignee Name</th>
+            <th>Due Date</th>
+            <th>Description</th>
+            <th>Is Priority</th>
+            <th>Percent Complete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {assignments.map((assignment) => (
+            <tr key={assignment.externalId} data-external-id={assignment.externalId}>
+              <td>{assignment.assignee}</td>
+              <td>{assignment.dueDate}</td>
+              <td>{assignment.description}</td>
+              <td>{assignment.isPriority ? 'Yes' : 'No'}</td>
+              <td>{assignment.percentComplete != null ? `${assignment.percentComplete}%` : ''}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
