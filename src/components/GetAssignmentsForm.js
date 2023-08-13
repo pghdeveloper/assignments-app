@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../css/AssignmentForm.css';
 
 const GetAssignmentsForm = () => {
   const [assignee, setAssigneeName] = useState('');
@@ -95,43 +96,6 @@ const GetAssignmentsForm = () => {
       )}
     </div>
   );
-
-  // return (
-  //   <div>
-  //     <div>
-  //       <label htmlFor="assignee">Assignee Name:</label>
-  //       <input
-  //         type="text"
-  //         id="assignee"
-  //         value={assignee}
-  //         onChange={(e) => setAssigneeName(e.target.value)}
-  //       />
-  //       <button onClick={handleSearchClick}>Get Assignments</button>
-  //     </div>
-  //     <table>
-  //       <thead>
-  //         <tr>
-  //           <th>Assignee Name</th>
-  //           <th>Due Date</th>
-  //           <th>Description</th>
-  //           <th>Is Priority</th>
-  //           <th>Percent Complete</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {assignments.map((assignment) => (
-  //           <tr key={assignment.externalId} data-external-id={assignment.externalId}>
-  //             <td>{assignment.assignee}</td>
-  //             <td>{assignment.dueDate}</td>
-  //             <td>{assignment.description}</td>
-  //             <td>{assignment.isPriority ? 'Yes' : 'No'}</td>
-  //             <td>{assignment.percentComplete != null ? `${assignment.percentComplete}%` : ''}</td>
-  //           </tr>
-  //         ))}
-  //       </tbody>
-  //     </table>
-  //   </div>
-  // );
 };
 
 export default GetAssignmentsForm;
