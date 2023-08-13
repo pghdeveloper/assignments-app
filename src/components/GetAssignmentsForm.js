@@ -87,8 +87,8 @@ const GetAssignmentsForm = () => {
           <label>Is Priority:</label>
           <input
             type="checkbox"
-            value={selectedAssignment.isPriority}
-            onChange={(e) => setSelectedAssignment({ ...selectedAssignment, isPriority: e.target.value })}
+            checked={selectedAssignment.isPriority}
+            onChange={(e) => setSelectedAssignment({ ...selectedAssignment, isPriority: e.target.checked })}
           />
           <button onClick={handleUpdateClick}>Update Assignment</button>
           <button onClick={() => setSelectedAssignment(null)}>Cancel</button>
