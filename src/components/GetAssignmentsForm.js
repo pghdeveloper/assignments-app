@@ -66,30 +66,46 @@ const GetAssignmentsForm = () => {
       {/* Modal for editing the selected assignment */}
       {selectedAssignment && (
         <div>
-          <label>Due Date:</label>
-          <input
-            type="text"
-            value={selectedAssignment.dueDate}
-            onChange={(e) => setSelectedAssignment({ ...selectedAssignment, dueDate: e.target.value })}
-          />
-          <label>Description:</label>
-          <input
-            type="text"
-            value={selectedAssignment.description}
-            onChange={(e) => setSelectedAssignment({ ...selectedAssignment, description: e.target.value })}
-          />
-          <label>Percent Complete:</label>
-          <input
-            type="text"
-            value={selectedAssignment.percentComplete}
-            onChange={(e) => setSelectedAssignment({ ...selectedAssignment, percentComplete: e.target.value })}
-          />
-          <label>Is Priority:</label>
-          <input
-            type="checkbox"
-            checked={selectedAssignment.isPriority}
-            onChange={(e) => setSelectedAssignment({ ...selectedAssignment, isPriority: e.target.checked })}
-          />
+          <div>
+            <label>Assignee:</label>
+            <input
+              type="text"
+              value={selectedAssignment.assignee}
+              readOnly
+            />
+          </div>
+          <div>
+            <label>Due Date:</label>
+            <input
+              type="text"
+              value={selectedAssignment.dueDate}
+              onChange={(e) => setSelectedAssignment({ ...selectedAssignment, dueDate: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Description:</label>
+            <input
+              type="text"
+              value={selectedAssignment.description}
+              onChange={(e) => setSelectedAssignment({ ...selectedAssignment, description: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Percent Complete:</label>
+            <input
+              type="text"
+              value={selectedAssignment.percentComplete}
+              onChange={(e) => setSelectedAssignment({ ...selectedAssignment, percentComplete: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Is Priority:</label>
+            <input
+              type="checkbox"
+              checked={selectedAssignment.isPriority}
+              onChange={(e) => setSelectedAssignment({ ...selectedAssignment, isPriority: e.target.checked })}
+            />
+          </div>
           <button onClick={handleUpdateClick}>Update Assignment</button>
           <button onClick={() => setSelectedAssignment(null)}>Cancel</button>
         </div>
